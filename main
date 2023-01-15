@@ -1,0 +1,641 @@
+-- gui
+local file = 'RagdollThingz/AimbotTeamList.txt'
+-- auto b
+local affectragdolled = true
+local attackbehind = false
+local team = true
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextLabel = Instance.new("TextLabel")
+local UIGridLayout = Instance.new("UIGridLayout")
+local TextLabel_2 = Instance.new("TextLabel")
+local TextLabel_3 = Instance.new("TextLabel")
+local TextLabel_4 = Instance.new("TextLabel")
+local TextLabel_5 = Instance.new("TextLabel")
+
+ScreenGui.Name = 'MadSkiddizm'
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0, 0,0.767, 0)
+Frame.Size = UDim2.new(0.162, 0,0.233, 0)
+Frame.BackgroundTransparency = 1
+
+TextLabel.Name = 'TC'
+TextLabel.Parent = Frame
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.Size = UDim2.new(0, 200, 0, 50)
+TextLabel.Font = Enum.Font.Ubuntu
+TextLabel.Text = "[X] Team Chooser"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextWrapped = true
+TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+TextLabel.TextStrokeTransparency = 0
+
+UIGridLayout.Parent = Frame
+UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIGridLayout.CellSize = UDim2.new(1, 0, 0.100000001, 0)
+UIGridLayout.VerticalAlignment = Enum.VerticalAlignment.Bottom
+
+TextLabel_2.Name = 'ABC'
+TextLabel_2.Parent = Frame
+TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_2.BackgroundTransparency = 1.000
+TextLabel_2.Size = UDim2.new(0, 200, 0, 50)
+TextLabel_2.Font = Enum.Font.Ubuntu
+TextLabel_2.Text = "[B] AutoBatConsec"
+TextLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_2.TextScaled = true
+TextLabel_2.TextSize = 14.000
+TextLabel_2.TextWrapped = true
+TextLabel_2.TextXAlignment = Enum.TextXAlignment.Left
+TextLabel_2.TextStrokeTransparency = 0
+
+TextLabel_3.Name = 'ABUC'
+TextLabel_3.Parent = Frame
+TextLabel_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_3.BackgroundTransparency = 1.000
+TextLabel_3.Size = UDim2.new(0, 200, 0, 50)
+TextLabel_3.Font = Enum.Font.Ubuntu
+TextLabel_3.Text = "[C] AutoBatUnragdollConsec"
+TextLabel_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_3.TextScaled = true
+TextLabel_3.TextSize = 14.000
+TextLabel_3.TextWrapped = true
+TextLabel_3.TextXAlignment = Enum.TextXAlignment.Left
+TextLabel_3.TextStrokeTransparency = 0
+
+TextLabel_4.Name = 'HBE'
+TextLabel_4.Parent = Frame
+TextLabel_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_4.BackgroundTransparency = 1.000
+TextLabel_4.Size = UDim2.new(0, 200, 0, 50)
+TextLabel_4.Font = Enum.Font.Ubuntu
+TextLabel_4.Text = "[Z] HitboxExtender"
+TextLabel_4.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_4.TextScaled = true
+TextLabel_4.TextSize = 14.000
+TextLabel_4.TextWrapped = true
+TextLabel_4.TextXAlignment = Enum.TextXAlignment.Left
+TextLabel_4.TextStrokeTransparency = 0
+
+TextLabel_5.Name = 'HBEV'
+TextLabel_5.Parent = Frame
+TextLabel_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_5.BackgroundTransparency = 1.000
+TextLabel_5.Size = UDim2.new(0, 200, 0, 50)
+TextLabel_5.Font = Enum.Font.Ubuntu
+TextLabel_5.Text = "[N] HitboxExtenderVisualize"
+TextLabel_5.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_5.TextScaled = true
+TextLabel_5.TextSize = 14.000
+TextLabel_5.TextWrapped = true
+TextLabel_5.TextXAlignment = Enum.TextXAlignment.Left
+TextLabel_5.TextStrokeTransparency = 0
+
+game:GetService('UserInputService').InputBegan:Connect(function(k,c)
+	if k.KeyCode == Enum.KeyCode.Semicolon and not c then
+		ScreenGui.Enabled = not ScreenGui.Enabled
+	end
+end)
+
+-- scripts
+local plr = game:GetService('Players').LocalPlayer
+local mouse = plr:GetMouse()
+local teamadd = false
+local tools = {}
+local toolnames = {'Punch','Haymaker','Uppercut','Kick'}
+local hbetoggler = true
+local visualize = false
+--autob
+local u5 = true
+local team
+local rawteam
+local textlabel
+local box = {}
+local rs2 = game:GetService('RunService')
+local rs = game:GetService("ReplicatedStorage") 
+local bn = require(rs:WaitForChild('BridgeNet')) 
+local sound = bn.CreateBridge("Sound") 
+local hit = bn.CreateBridge("Hit") 
+local u44 = 'BatConsec'
+local u49 = 0
+local victimB = false
+local pogizm = false
+local Btoggled = true
+local aanim = Instance.new('Animation')
+aanim.AnimationId = 'rbxassetid://10975965680'
+local hitboxpart
+local anim
+local bat
+local hrp
+local char
+local hum
+local touching = {}
+local teamlist = readfile(file):split(' ')
+--autoc
+local victim = false
+local pogika = false
+local ctoggled = true
+local anim
+local bat
+local teamlist = readfile(file):split(' ')
+
+
+if isfolder('RagdollThingz')  then
+	rawteam = readfile(file)
+	team = readfile(file):split(' ')
+	table.remove(team,1)
+else
+	makefolder('RagdollThingz')
+	writefile(file,' keriWWS')
+	team = {'keriWWS'}
+	rawteam = ' keriWWS'
+end
+function soundG(val)
+	local soundx = Instance.new('Sound',plr.PlayerGui)
+	soundx.SoundId = 'rbxassetid://2865227039'
+	repeat
+		wait()
+	until soundx.Loaded
+	soundx:Play()
+	if val then
+		Instance.new('PitchShiftSoundEffect',soundx)
+	end
+	game:GetService('Debris'):AddItem(soundx,soundx.TimeLength)
+end
+local function u25(p2)
+	if p2 then
+		if not u5 then
+			return 
+		end 
+	else
+		if not u5 then
+			u5 = true 
+			local u15 = require(plr.PlayerScripts:WaitForChild("PlayerModule")):GetControls() 
+			game:GetService('RunService'):BindToRenderStep("ControlScriptRenderstep", Enum.RenderPriority.Input.Value, function(p3)
+				u15:OnRenderStepped(p3) 
+			end) 
+		end 
+		return 
+	end 
+	u5 = false 
+	char.Humanoid:MoveTo(char.HumanoidRootPart.Position)
+	rs2:UnbindFromRenderStep("ControlScriptRenderstep")
+end
+task.spawn(function()
+	while task.wait(30) do
+		if team then
+			teamlist = readfile(file):split(' ')
+		end
+	end
+end)
+game:GetService('UserInputService').InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed then return end
+	if input.KeyCode == Enum.KeyCode.Z then
+		hbetoggler = not hbetoggler
+		task.spawn(function()
+			if hbetoggler then
+				for _, tool in pairs(tools) do
+					tool.imdiook.Color = Color3.fromRGB(0,255,0)
+				end
+				TextLabel_4.TextColor3 = Color3.fromRGB(0,255,0)
+			else
+				for _, tool in pairs(tools) do
+					tool.imdiook.Color = Color3.fromRGB(255,0,0)
+				end
+				TextLabel_4.TextColor3 = Color3.fromRGB(255,0,0)
+			end
+		end)
+		soundG(hbetoggler)
+	elseif input.KeyCode == Enum.KeyCode.N then
+		visualize = not visualize
+		task.spawn(function()
+			if visualize then
+				for _, tool in pairs(tools) do
+					print(tool)
+					tool.imdiook.Transparency = .5
+				end
+				TextLabel_5.TextColor3 = Color3.fromRGB(0,255,0)
+			else
+				for _, tool in pairs(tools) do
+					tool.imdiook.Transparency = 1
+				end
+				TextLabel_5.TextColor3 = Color3.fromRGB(255,0,0)
+			end
+		end)
+		soundG(visualize)
+	elseif input.KeyCode == Enum.KeyCode.X then
+		teamadd = not teamadd
+		if teamadd then
+			TextLabel.TextColor3 = Color3.fromRGB(0,255,0)
+		else
+			TextLabel.TextColor3 = Color3.fromRGB(255,0,0)
+		end
+		soundG(teamadd)
+	elseif input.KeyCode == Enum.KeyCode.B then
+		Btoggled = not Btoggled
+		if Btoggled then
+			TextLabel_2.TextColor3 = Color3.fromRGB(0,255,0)
+		else
+			TextLabel_2.TextColor3 = Color3.fromRGB(255,0,0)
+		end
+		soundG(Btoggled)
+	elseif input.KeyCode == Enum.KeyCode.C then
+		ctoggled = not ctoggled
+		if ctoggled then
+			TextLabel_3.TextColor3 = Color3.fromRGB(0,255,0)	
+		else
+			TextLabel_3.TextColor3 = Color3.fromRGB(255,0,0)
+		end
+		soundG(ctoggled)
+	end
+end)
+-- team chooser
+task.spawn(function()
+	TextLabel.TextColor3 = Color3.fromRGB(255,0,0)
+	mouse.Button1Down:Connect(function()
+		local target = mouse.Target
+		if teamadd and target ~= nil then
+			local x = false
+			if target.Parent:FindFirstChild('Humanoid') then
+				x = true
+			elseif target.Parent.Parent:FindFirstChild('Humanoid') then
+				target = target.Parent
+				x = true
+			end
+			if not x then return end
+			if target.Parent.Name ~= plr.Name then
+				if table.find(team,target.Parent.Name) then
+					table.remove(team,table.find(team,target.Parent.Name))
+					_G.RomasTeam = team
+					rawteam = rawteam:gsub(' '..target.Parent.Name,'')
+					delfile(file)
+					writefile(file,rawteam)
+					game:GetService('StarterGui'):SetCore("SendNotification", {
+						Title = "Player removed from list.";
+						Text = target.Parent.Name.." was removed from team list.";
+						Icon = game.Players:GetUserThumbnailAsync(game.Players[target.Parent.Name].UserId,Enum.ThumbnailType.HeadShot,Enum.ThumbnailSize.Size150x150);
+						Duration = 2;
+					})
+				else
+					if not string.find(rawteam,target.Parent.Name) then
+						table.insert(team,target.Parent.Name)
+						_G.RomasTeam = team
+						appendfile(file,' '..target.Parent.Name)
+						rawteam = readfile(file)
+						game:GetService('StarterGui'):SetCore("SendNotification", {
+							Title = "Player added in list.";
+							Text = target.Parent.Name.." has been added in team list.";
+							Icon = game.Players:GetUserThumbnailAsync(game.Players[target.Parent.Name].UserId,Enum.ThumbnailType.HeadShot,Enum.ThumbnailSize.Size150x150);
+							Duration = 2;
+						})
+					end
+				end
+			end
+		end
+	end)
+	mouse.Move:Connect(function()
+		local target = mouse.Target
+		for _, v in pairs(box) do
+			v:Destroy()
+		end
+		box = {}
+		if teamadd and target ~= nil then
+			local x = false
+			if target.Parent:FindFirstChild('Humanoid') then
+				x = true
+			elseif target.Parent.Parent:FindFirstChild('Humanoid') then
+				target = target.Parent
+				x = true
+			end
+			if not x then return end
+			if target.Parent.Name ~= plr.Name then
+				for _, v in pairs(target.Parent:GetChildren()) do
+					if v:IsA('BasePart') then
+						if table.find(team,target.Parent.Name) then
+							local boxy = Instance.new('SelectionBox', v)
+							boxy.Adornee = v
+							boxy.LineThickness = .05
+							boxy.Color3 = Color3.fromRGB(255,0,0)
+							table.insert(box,boxy)
+						else
+							local boxy = Instance.new('SelectionBox', v)
+							boxy.Adornee = v
+							boxy.LineThickness = .05
+							boxy.Color3 = Color3.fromRGB(0,255,0)
+							table.insert(box,boxy)
+						end
+					end
+				end
+			end
+		end
+	end)
+end)
+-- hbe
+task.spawn(function()
+	TextLabel_4.TextColor3 = Color3.fromRGB(0,255,0)
+	TextLabel_5.TextColor3 = Color3.fromRGB(255,0,0)
+	function toolFunction(char)
+		for _, v in pairs(tools) do
+			table.remove(tools,_)
+		end
+		for _, tool in pairs(toolnames) do
+			tool = plr.Backpack:WaitForChild(tool)
+			table.insert(tools,tool)
+			local hitbox = Instance.new('Part', tool)
+			local touchcon
+			hitbox.Name = 'imdiook'
+			if visualize then
+				hitbox.Transparency = .5
+			else
+				hitbox.Transparency = 1
+			end
+			hitbox.Massless = true
+			hitbox.CanCollide = false
+			hitbox.Material = Enum.Material.SmoothPlastic
+			hitbox.Size = Vector3.new(1.3,2.3,1.3)
+			if hbetoggler then
+				hitbox.Color = Color3.fromRGB(0,255,0)
+			else
+				hitbox.Color = Color3.fromRGB(255,0,0)
+			end
+			local mweld = Instance.new('Weld',hitbox)
+			mweld.Part0 = hitbox
+			if tool.Name ~= 'Kick' then
+				mweld.Part1 = char:WaitForChild('Right Arm')
+			else
+				mweld.Part1 = char:WaitForChild('Right Leg')
+			end
+			tool.DescendantAdded:Connect(function(d)
+				if d.Name == 'TouchInterest' then
+					touchcon = hitbox.Touched:Connect(function(hit)
+						if hit.Parent:FindFirstChild('Humanoid') and hit.Name ~= 'Collider' and hbetoggler then
+							firetouchinterest(hit,tool.Part,0)
+							firetouchinterest(hit,tool.Part,1)
+						end
+					end)
+				end
+			end)
+			tool.DescendantRemoving:Connect(function(d)
+				if d.Name == 'TouchInterest' then
+					if touchcon then
+						touchcon:Disconnect()
+					end
+				end
+			end)
+		end
+	end
+	repeat
+		wait()
+	until plr.Character
+	toolFunction(plr.Character)
+	plr.CharacterAdded:Connect(function(char)
+		toolFunction(char)
+	end)
+end)
+-- auto b
+task.spawn(function()
+	TextLabel_2.TextColor3 = Color3.fromRGB(0,255,0)
+	local function genry(victimhrp,victimhum,victimchar,v)
+		if not victimB and not pogizm and victimhum.Health >= 1 and bat.Enabled and not victimhum:GetAttribute('Blocking') and hum:GetState() ~= Enum.HumanoidStateType.Swimming then
+			if not attackbehind then
+				if table.find(hitboxpart:GetTouchingParts(),victimhrp) then
+					return
+				end
+			end
+			if not affectragdolled and victimhum:GetAttribute("Ragdolled") then
+				return
+			end
+			local hpos = Vector3.new(hrp.Position.X,0,hrp.Position.Z)
+			local vpos = Vector3.new(victimhrp.Position.X,0,victimhrp.Position.Z)
+			local hy = hrp.Position.Y
+			local vy = victimhrp.Position.Y
+			if (hy - vy)/1.5 > 8 then
+				return
+			end
+			if team and table.find(teamlist,v.Name) then
+				return
+			end
+			if (hpos - vpos).magnitude > 7 then
+				return
+			end
+			victimB = true
+			anim:Play()
+			hrp.CFrame = CFrame.lookAt(hrp.Position,Vector3.new(victimhrp.Position.X,hrp.Position.Y,victimhrp.Position.Z))
+			bat.Enabled = false
+			u25(true)
+			hum.AutoRotate = false
+			sound:Fire('BatHit') 
+			hit:Fire(victimchar, u44, u44 == "BatSwing" and u49 or 0)
+			task.wait(.1)
+			u25(false)
+			anim:Stop()
+			victimB = false
+			if not hum:GetAttribute('Ragdolled') then
+				hum.AutoRotate = true
+			end
+			for i = 6, 0.5, -0.5 do
+				bat.Name = "[" .. i .. "]"
+				task.wait(0.5)
+			end
+			bat.Enabled = true
+			bat.Name = 'Baseball Bat'
+		end
+	end
+
+	local function keri(v)
+		spawn(function()
+			repeat
+				wait()
+			until v.Character
+			local victimchar = v.Character
+			local victimhum = victimchar:WaitForChild("Humanoid")
+			local victimhrp = victimchar:WaitForChild("HumanoidRootPart")
+			v.CharacterAdded:Connect(function(c)
+				victimchar = c
+				victimhum = victimchar:WaitForChild("Humanoid")
+				victimhrp = victimchar:WaitForChild("HumanoidRootPart")
+			end)
+			local con
+			spawn(function()
+				con = rs2.Stepped:Connect(function()
+					if not v then
+						con:Disconnect()
+						return
+					end
+					if Btoggled and hum ~= nil and hum.Health > 0 and not hum:GetAttribute('Ragdolled') and victimhum ~= nil and victimhum.Health > 0 and char:FindFirstChild(bat.Name) then
+						genry(victimhrp,victimhum,victimchar,v)
+					end
+				end)
+			end)
+		end)
+	end
+
+	repeat
+		wait()
+	until plr.Character
+	char = plr.Character
+	hum = char:WaitForChild('Humanoid')
+	hrp = char:WaitForChild('HumanoidRootPart')
+	bat = plr.Backpack:WaitForChild('Baseball Bat')
+	anim = hum:WaitForChild("Animator"):LoadAnimation(aanim)
+	if not attackbehind then
+		hitboxpart = Instance.new('Part',char)
+		local weld = Instance.new('Weld',hitboxpart)
+		hitboxpart.CanCollide = false
+		hitboxpart.Transparency = 1
+		hitboxpart.Size = Vector3.new(15, 10, 15)
+		hitboxpart.Massless = true
+		hitboxpart.CanQuery = false	
+		weld.Part0 = hitboxpart
+		weld.Part1 = hrp
+		weld.C0 = CFrame.new(Vector3.new(0,0,-7))
+	end
+	plr.CharacterAdded:Connect(function(c)
+		pogizm = true
+		char = c
+		hum = c:WaitForChild('Humanoid')
+		hrp = c:WaitForChild('HumanoidRootPart')
+		bat = plr.Backpack:WaitForChild('Baseball Bat')
+		anim = hum:WaitForChild("Animator"):LoadAnimation(aanim)
+		if not attackbehind then
+			hitboxpart = Instance.new('Part',char)
+			local weld = Instance.new('Weld',hitboxpart)
+			hitboxpart.CanCollide = false
+			hitboxpart.Transparency = 1
+			hitboxpart.Size = Vector3.new(15, 10, 15)
+			hitboxpart.Massless = true
+			hitboxpart.CanQuery = false
+			weld.Part0 = hitboxpart
+			weld.Part1 = hrp
+			weld.C0 = CFrame.new(Vector3.new(0,0,-7))
+		end
+		task.wait(1)
+		pogizm = false
+	end)
+
+	for _, v in pairs(game.Players:GetChildren()) do
+		if v ~= plr then
+			keri(v)
+		end
+	end
+
+	game.Players.PlayerAdded:Connect(function(v)
+		keri(v)
+	end)
+end)
+-- auto c
+task.spawn(function()
+	TextLabel_3.TextColor3 = Color3.fromRGB(0,255,0)
+	local function genry(victimhrp,victimhum,victimchar,v)
+		if hum ~= nil and hum.Health > 0 and not hum:GetAttribute('Ragdolled') then
+			print(v)
+			repeat
+				wait(.1)
+			until not hum:GetAttribute('Ragdolled')
+			if not victim and not pogika then
+				if not affectragdolled and victimhum:GetAttribute("Ragdolled") then
+					return
+				end
+				if team and table.find(teamlist,v.Name) then
+					return
+				end
+				if victimhum.Health <= 0 or not bat.Enabled or (hrp.Position - victimhrp.Position).magnitude > 7 or victimhum:GetAttribute('Blocking') or hum:GetState() == Enum.HumanoidStateType.Swimming then
+					return
+				end
+				victim = true
+				hum:EquipTool(bat)
+				anim:Play()
+				hrp.CFrame = CFrame.lookAt(hrp.Position,Vector3.new(victimhrp.Position.X,hrp.Position.Y,victimhrp.Position.Z))
+				bat.Enabled = false
+				u25(true)
+				hum.AutoRotate = false
+				sound:Fire('BatHit') 
+				hit:Fire(victimchar, u44, u44 == "BatSwing" and u49 or 0)
+				task.wait(.1)
+				u25(false)
+				anim:Stop()
+				victim = false
+				if not hum:GetAttribute('Ragdolled') then
+					hum.AutoRotate = true
+				end
+				for i = 6, 0.5, -0.5 do
+					bat.Name = "[" .. i .. "]"
+					task.wait(0.5)
+				end
+				bat.Enabled = true
+				bat.Name = 'Baseball Bat'
+			end
+		end
+	end
+
+	local function keri(v)
+		spawn(function()
+			repeat
+				wait()
+			until v.Character
+			local victimchar = v.Character
+			local victimhum = victimchar:WaitForChild("Humanoid")
+			local victimhrp = victimchar:WaitForChild("HumanoidRootPart")
+			v.CharacterAdded:Connect(function(c)
+				victimchar = c
+				victimhum = victimchar:WaitForChild("Humanoid")
+				victimhrp = victimchar:WaitForChild("HumanoidRootPart")
+			end)
+			hum:GetAttributeChangedSignal('Ragdolled'):Connect(function()
+				if victimhum.Health <= 0 or not ctoggled then
+					return
+				end
+				genry(victimhrp,victimhum,victimchar,v)
+			end)
+			plr.CharacterAdded:Connect(function()
+				repeat
+					wait()
+				until hum ~= nil
+				hum:GetAttributeChangedSignal('Ragdolled'):Connect(function()
+					if victimhum.Health <= 0 or not ctoggled then
+						return
+					end
+					genry(victimhrp,victimhum,victimchar,v)
+				end)
+			end)
+		end)
+	end
+	repeat
+		wait()
+	until plr.Character
+	char = plr.Character
+	hum = char:WaitForChild('Humanoid')
+	hrp = char:WaitForChild('HumanoidRootPart')
+	bat = plr.Backpack:WaitForChild('Baseball Bat')
+	anim = hum:WaitForChild("Animator"):LoadAnimation(aanim)
+
+	plr.CharacterAdded:Connect(function(c)
+		pogika = true
+		char = c
+		hum = c:WaitForChild('Humanoid')
+		hrp = c:WaitForChild('HumanoidRootPart')
+		bat = plr.Backpack:WaitForChild('Baseball Bat')
+		anim = hum:WaitForChild("Animator"):LoadAnimation(aanim)
+		task.wait(1)
+		pogika = false
+	end)
+
+	for _, v in pairs(game.Players:GetChildren()) do
+		if v ~= plr then
+			keri(v)
+		end
+	end
+
+	game.Players.PlayerAdded:Connect(function(v)
+		keri(v)
+	end)
+end)
