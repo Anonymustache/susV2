@@ -1,4 +1,4 @@
--- gui
+-- gui 
 local file = 'RagdollThingz/AimbotTeamList.txt'
 -- auto b
 local affectragdolled = true
