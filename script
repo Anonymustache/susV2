@@ -1,4 +1,4 @@
--- gui 
+-- gui
 local file = 'RagdollThingz/AimbotTeamList.txt'
 -- auto b
 local affectragdolled = true
@@ -361,7 +361,7 @@ task.spawn(function()
 			hitbox.Massless = true
 			hitbox.CanCollide = false
 			hitbox.Material = Enum.Material.SmoothPlastic
-			hitbox.Size = Vector3.new(1.3,2.3,1.3)
+			hitbox.Size = basesize
 			if hbetoggler then
 				hitbox.Color = Color3.fromRGB(0,255,0)
 			else
