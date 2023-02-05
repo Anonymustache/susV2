@@ -361,7 +361,7 @@ task.spawn(function()
 			hitbox.Massless = true
 			hitbox.CanCollide = false
 			hitbox.Material = Enum.Material.SmoothPlastic
-			hitbox.Size = basesize
+			hitbox.Size = _G.basesize
 			if hbetoggler then
 				hitbox.Color = Color3.fromRGB(0,255,0)
 			else
