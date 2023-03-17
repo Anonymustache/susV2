@@ -149,7 +149,10 @@ local bat
 local teamlist = readfile(file):split(' ')
 
 
-if isfolder('RagdollThingz')  then
+if isfolder('RagdollThingz') then
+if not isfile('RagdollThingz/AimbotTeamList.txt') then
+writefile(file, ' keriWWS')
+end
 	rawteam = readfile(file)
 	team = readfile(file):split(' ')
 	table.remove(team,1)
