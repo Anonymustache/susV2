@@ -421,7 +421,7 @@ task.spawn(function()
 			local vpos = Vector3.new(victimhrp.Position.X,0,victimhrp.Position.Z)
 			local hy = hrp.Position.Y
 			local vy = victimhrp.Position.Y
-			if (hy - vy)/1.5 > 8 then
+			if (hy - vy)/1.5 > 3 then
 				return
 			end
 			if team and table.find(teamlist,v.Name) then
